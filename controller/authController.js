@@ -2,6 +2,7 @@ const UserModel = require("../database/models/userModel");
 const jwt = require('jsonwebtoken');
 const ErrorHandler = require("../utils/errorHandler");
 const asyncErrorHandler = require("../middleware/asyncErrors");
+const bcrypt = require("bcryptjs");
 
 
 const signupUser = asyncErrorHandler(async (req,res,next)=>{
@@ -21,7 +22,7 @@ const signupUser = asyncErrorHandler(async (req,res,next)=>{
 
 });
 
-const login = asyncErrorHandler(async (req, res) => {
+const login = asyncErrorHandler(async (req, res,next) => {
         const { username, password } = req.body
 
         const existingUser = await UserModel.findOne({ username })
@@ -47,7 +48,7 @@ const logout = asyncErrorHandler(async (req,res,next)=>{
 
 const getDetails = asyncErrorHandler(async (req, res) => {
 
-        const user = await UserModel.findOne({ _id: req.id })
+        const user = await UserModel.findOne({ _id: req.user._id })
         res.status(200).json({ user, status: true })
 })
 
