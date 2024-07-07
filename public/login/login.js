@@ -16,8 +16,9 @@ form.addEventListener("submit",async (e)=>{
         body:JSON.stringify(sendPayload)
     })
     const result = await response.json();
+    console.log(result)
     if(result.status === 200){
-        alert("Login")
+        window.location.href = "/"
     }else{
         window.location.reload();
         alert(result.message)

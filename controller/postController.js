@@ -10,7 +10,7 @@ const createPost = asyncErrorHandler(async(req,res)=>{
         author: userId
     }
         await PostModel.create(payload)
-        res.status(200).json({ message: "Created" })
+        res.status(201).json({ message: "Created" })
 })
 
 const getAllPosts = asyncErrorHandler(async(req,res)=>{
