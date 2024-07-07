@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:[true,'Username missing!']
     },
+    email:{
+        type:String,
+        required:[true,"Email missing!"]
+    },
     password:{
         type:String,
         required:[true,'Password missing!']
@@ -18,6 +22,7 @@ const userSchema = new mongoose.Schema({
     }
 });
 
+//this function hashes the password before saving it in the DB.
 userSchema.pre('save',async function(next){
     if(!this.isModified("password")) next();
 

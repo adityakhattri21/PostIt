@@ -15,10 +15,12 @@ const port = process.env.PORT || 3000;
 app.use(express.json())
 app.use(cookieParser())
 
+//static files
 app.use('/', express.static("public/home"))
 app.use('/login',authMiddleware.isUserLoggedin, express.static("public/login"))
 app.use("/signup",authMiddleware.isUserLoggedin,express.static("public/signup")) 
 
+//REST API routes
 app.use("/auth",authRouter)
 app.use("/post",postRouter)
 app.use("/comment",commentRouter)
@@ -27,6 +29,7 @@ app.get("/ping",(req,res)=>{
     res.status(200).json({message:"pong"})
 })
 
+//errorMiddleware
 app.use(errorMiddleware)
 
 app.listen(port,()=>{

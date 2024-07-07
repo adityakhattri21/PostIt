@@ -1,5 +1,5 @@
-const ErrorHandler = require("../utils/errorHandler");
 
+//catches and throws the error in specified format.
 module.exports=(err,req,res,next)=>{
 
     err.statusCode = err.statusCode || 500;

@@ -5,7 +5,7 @@ form.addEventListener("submit",async (e)=>{
 
     const formData = new FormData(form);
     const sendPayload = {
-        username: formData.get("username"),
+        loginTerm: formData.get("username"),
         password: formData.get("password")
     }
     const response = await fetch("/auth/login",{

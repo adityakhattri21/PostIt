@@ -1,17 +1,19 @@
 const root = document.getElementById("root");
 
+//function to get user details
 const getUserDetails = async () => {
     const userpanel = document.getElementById('userPanel');
     const res = await fetch('/auth/all-details');
     if (res.status === 200) {
         const result = await res.json();
         userpanel.innerHTML = `<div class="flex items-center justify-end mb-8 pr-4">
-            <span class="mr-5 text-white font-bold">${result.user.username}</span>
+            <span class="mr-5 text-white font-bold">${result.user.email}</span>
             <i onclick="logout()" class="cursor-pointer text-rose-400 hover:text-rose-500 transition-colors duration-150 ri-logout-box-r-line"></i>
         </div>`;
     }
 };
 
+//logout function
 const logout = async () => {
     await fetch("/auth/logout", {
         method: "POST"
@@ -20,6 +22,7 @@ const logout = async () => {
    
 };
 
+//post form to create new posts
 const postForm = document.getElementById("post-form")
 postForm.addEventListener("submit",async(e)=>{
     e.preventDefault();
@@ -46,6 +49,7 @@ postForm.addEventListener("submit",async(e)=>{
     }
 })
 
+//fetch all posts
 const fetchAllPosts = async()=>{
     const response = await fetch("/post")
     const results = await response.json();
@@ -57,10 +61,11 @@ const fetchAllPosts = async()=>{
 }
 
 const addPosts = (post)=>{
-    console.log(post)
+    //post container
     const container = document.createElement("div")
     container.classList.add("bg-white", "shadow-md", "rounded", "px-8", "pt-6", "pb-8", "mb-4", "border", "border-red-300", "card-shadow", "fade-in");
 
+    //author details
     const authorSection = document.createElement("div")
     authorSection.classList.add("flex","items-center", "mb-4")
     authorSection.innerHTML = `<img src="${post.author.avatar}" alt="Avatar" class="rounded-full w-16 h-16 object-cover mr-4"/>
@@ -69,12 +74,14 @@ const addPosts = (post)=>{
         <time class="text-gray-600">${getDateInFormat(post.createdAt)}</time> </div>`
     container.appendChild(authorSection);
 
+    //post content
     const postContent = document.createElement("p")
     postContent.classList.add("text-gray-800", "text-2xl", "font-medium");
     postContent.innerText = post.content
     container.appendChild(postContent);
 
 
+    //post comment sections
     const commentSection = document.createElement("div");
     commentSection.classList.add("mt-4")
     const commentTitle = document.createElement("h3")
@@ -82,6 +89,7 @@ const addPosts = (post)=>{
     commentTitle.innerText = "Comments";
     commentSection.appendChild(commentTitle)
 
+    //appending each comment to the post
     post.comments.forEach((comment) => {
         const commentContainer = document.createElement("div");
         commentContainer.classList.add("flex", "flex-col", "items-start", "space-y-2", "mb-4", "mt-4");
@@ -99,6 +107,7 @@ const addPosts = (post)=>{
     });
 
 
+    //form to add new comment
     const commentForm = document.createElement("form")
     commentForm.id= "commentForm"
     commentForm.classList.add("mt-4")
@@ -140,6 +149,7 @@ const addPosts = (post)=>{
     return container;
 }
 
+//function to get date and time in DD/MM/YYYY HH:MM format
 const getDateInFormat = (dateString)=>{
     const dateObject = new Date(dateString);
 
@@ -147,9 +157,12 @@ const day = dateObject.getDate();
 const month = dateObject.getMonth() + 1; 
 const year = dateObject.getFullYear(); 
 const hours = dateObject.getHours(); 
-const minutes = dateObject.getMinutes(); 
+const minutes = dateObject.getMinutes();
 
-return `${day}/${month}/${year} ${hours}:${minutes}`
+const formattedHour = String(hours).padStart(2, '0');
+const formattedMinute = String(minutes).padStart(2, '0'); 
+
+return `${day}/${month}/${year} ${formattedHour}:${formattedMinute}`
 }
 
 getUserDetails();

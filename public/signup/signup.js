@@ -6,7 +6,8 @@ form.addEventListener("submit",async(e)=>{
     const formData = new FormData(form)
     const signupPayload = {
         username: formData.get("username"),
-        password: formData.get("password")
+        password: formData.get("password"),
+        email: formData.get("email")
     };
 
     const response = await fetch("/auth/signup", {
