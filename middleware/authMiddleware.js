@@ -22,18 +22,12 @@ next();
 const isUserLoggedin = asyncErrorHandler(async(req,res,next)=>{
     if (req.cookies && req.cookies.user) {
         token = req.cookies.user
-        jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-            if (err) {
-                console.error(err)
-                return res.status(401).json({ msg: "Invalid token", status: false })
-            }
-            const user = await User.findOne({ _id: decoded })
+        const decodedData = await jwt.verify(token, process.env.JWT_SECRET,)
+            const user = await UserModel.findOne({ _id: decodedData.id })
             if (!user) {
-                return res.status(401).json({ message: "Unathorized", success: false })
+                return next(new ErrorHandler("Unauthorized",401))
             }
             return res.redirect('/')
-
-        })
     } else {
         next()
     }

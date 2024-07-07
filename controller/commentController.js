@@ -15,7 +15,7 @@ const createComment = asyncErrorHandler(async(req,res)=>{
                 comments: newComment._id
             }}
         )
-        res.status(200).json({message:"updated", status:true}) 
+        res.status(200).json({message:"updated", success:true}) 
 });
 
 module.exports = {createComment};

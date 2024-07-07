@@ -35,7 +35,7 @@ const login = asyncErrorHandler(async (req, res,next) => {
         
         if (!match) return next(new ErrorHandler("Invalid Credentials",401))
         
-        const authToken = jwt.sign(existingUser._id.toString(), process.env.JWT_SECRET)
+        const authToken = jwt.sign({id:existingUser._id.toString()}, process.env.JWT_SECRET)
         
         res.cookie("user", authToken, { httpOnly: true, secure: true, sameSite: "Strict", maxAge: 3600000, path: "/" })
         res.status(200).json({ message: "Logged In", status: true })
