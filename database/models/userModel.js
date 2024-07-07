@@ -9,6 +9,12 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:[true,'Password missing!']
+    },
+    avatar:{
+        type:String,
+        default: function(){
+            return `https://api.multiavatar.com/${this.username}.png`
+        }
     }
 });
 

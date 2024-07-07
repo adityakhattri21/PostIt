@@ -63,7 +63,7 @@ const addPosts = (post)=>{
 
     const authorSection = document.createElement("div")
     authorSection.classList.add("flex","items-center", "mb-4")
-    authorSection.innerHTML = `<img src="https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=" alt="Avatar" class="rounded-full w-16 h-16 object-cover mr-4"/>
+    authorSection.innerHTML = `<img src="${post.author.avatar}" alt="Avatar" class="rounded-full w-16 h-16 object-cover mr-4"/>
     <div>
         <h2 class="text-xl font-bold text-gray-900">${post.author.username}</h2>
         <time class="text-gray-600">${getDateInFormat(post.createdAt)}</time> </div>`
@@ -89,7 +89,7 @@ const addPosts = (post)=>{
         commentContainer.innerHTML = `
             <div class="flex-col items-center ">
             <div class="flex items-center">    
-            <img src="https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=" alt="Comment Avatar" class="rounded-full w-10 h-10 object-cover"/>
+            <img src="${comment.author.avatar}" alt="Comment Avatar" class="rounded-full w-10 h-10 object-cover"/>
                 <span class="font-semibold text-lg ml-2">${comment.author.username}</span><br>
                 <time class="font-light text-xs ml-2">${getDateInFormat(comment.createdAt)}</time><br>
             </div>    
