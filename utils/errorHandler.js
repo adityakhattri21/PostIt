@@ -1,3 +1,4 @@
+// Custom class used for error handling
 class ErrorHandler extends Error{
     constructor(message , statusCode){
         super(message)

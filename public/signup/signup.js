@@ -20,7 +20,7 @@ form.addEventListener("submit",async(e)=>{
 
     const result = await response.json();
 
-    if(result.status === 200){
+    if(result.success){
         window.location.replace("/")
     } else{
         window.location.reload();

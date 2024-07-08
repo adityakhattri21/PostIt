@@ -4,7 +4,10 @@ const ErrorHandler = require("../utils/errorHandler");
 const asyncErrorHandler = require("../middleware/asyncErrors");
 const bcrypt = require("bcryptjs");
 
-
+/**
+ * @description This controller function handles signup logic
+ * @returns Success code , Token in cookie
+ */
 const signupUser = asyncErrorHandler(async (req,res,next)=>{
     const {username , password , email} = req.body;
 
@@ -32,6 +35,10 @@ const signupUser = asyncErrorHandler(async (req,res,next)=>{
 
 });
 
+/**
+ * @description This function handles the login function
+ * @returns JWT token in cookie
+ */
 const login = asyncErrorHandler(async (req, res,next) => {
         const { loginTerm, password } = req.body
 
@@ -49,14 +56,22 @@ const login = asyncErrorHandler(async (req, res,next) => {
         const authToken = jwt.sign({id:existingUser._id.toString()}, process.env.JWT_SECRET)
         
         res.cookie("user", authToken, { httpOnly: true, secure: true, sameSite: "Strict", maxAge: 3600000, path: "/" })
-        res.status(200).json({ message: "Logged In", status: true })
+        res.status(200).json({ message: "Logged In", success: true })
 })
 
+/**
+ * @description This function handles the logout logic
+ * @returns Success message and deletes the cookie
+ */
 const logout = asyncErrorHandler(async (req,res,next)=>{
     res.status(200).cookie("user", "", { httpOnly: true, secure: true, sameSite: "Strict", path: "/" })
     .json({ message: "Logged Out", status: true })
 })
 
+/**
+ * @description This function returns the details of the logged in user
+ * @returns The details of the user
+ */
 const getDetails = asyncErrorHandler(async (req, res) => {
 
         const user = await UserModel.findOne({ _id: req.user._id })
